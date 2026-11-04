@@ -17,11 +17,13 @@ const epoxyPath = fromHere("./node_modules/@mercuryworkshop/epoxy-transport/dist
 const PORT = Number(process.env.PORT) || 8080;
 const publicDir = fromHere("./public/");
 
-// Wisp: never let the proxy reach this machine or its local network
+// Wisp: never let the proxy reach this machine or its local network.
+// ipv4first: many hosts (Render included) have unreliable IPv6, which made some sites hang.
 logging.set_level(logging.WARN);
 Object.assign(wisp.options, {
   allow_private_ips: false,
   allow_loopback_ips: false,
+  dns_result_order: "ipv4first",
 });
 
 const app = express();
