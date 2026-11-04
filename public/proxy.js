@@ -35,7 +35,8 @@ function toUrl(input) {
   const text = input.trim();
   if (/^https?:\/\//i.test(text)) return text;
   if (!/\s/.test(text) && /^[\w-]+(\.[\w-]+)+(:\d+)?(\/.*)?$/.test(text)) return "https://" + text;
-  return "https://duckduckgo.com/?q=" + encodeURIComponent(text);
+  // Bing, not DuckDuckGo: DuckDuckGo never answers requests from Render's servers
+  return "https://www.bing.com/search?q=" + encodeURIComponent(text);
 }
 
 // Start loading the proxy in the background so the first search is fast
