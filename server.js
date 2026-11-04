@@ -7,6 +7,7 @@ import express from "express";
 import { server as wisp, logging } from "@mercuryworkshop/wisp-js/server";
 import scramjetPkg from "@mercuryworkshop/scramjet/path";
 import baremuxPkg from "@mercuryworkshop/bare-mux/node";
+import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 
 const { scramjetPath } = scramjetPkg;
 const { baremuxPath } = baremuxPkg;
@@ -31,6 +32,7 @@ app.use(express.static(publicDir));
 app.use("/scram/", express.static(scramjetPath));
 app.use("/baremux/", express.static(baremuxPath));
 app.use("/epoxy/", express.static(epoxyPath));
+app.use("/libcurl/", express.static(libcurlPath));
 app.use((req, res) => res.status(404).send("Not found"));
 
 const server = createServer(app);
