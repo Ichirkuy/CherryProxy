@@ -12,8 +12,6 @@ import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 const { scramjetPath } = scramjetPkg;
 const { baremuxPath } = baremuxPkg;
 const fromHere = (path) => fileURLToPath(new URL(path, import.meta.url));
-// epoxy-transport doesn't export its path helper, so point at its dist folder directly
-const epoxyPath = fromHere("./node_modules/@mercuryworkshop/epoxy-transport/dist/");
 
 const PORT = Number(process.env.PORT) || 8080;
 const publicDir = fromHere("./public/");
@@ -31,7 +29,6 @@ const app = express();
 app.use(express.static(publicDir));
 app.use("/scram/", express.static(scramjetPath));
 app.use("/baremux/", express.static(baremuxPath));
-app.use("/epoxy/", express.static(epoxyPath));
 app.use("/libcurl/", express.static(libcurlPath));
 app.use((req, res) => res.status(404).send("Not found"));
 

@@ -1,4 +1,5 @@
-// Proxy setup: Scramjet rewrites pages in the browser, Epoxy carries the traffic over Wisp to server.js
+// Proxy setup: Scramjet rewrites pages in the browser, libcurl carries the traffic over Wisp to server.js.
+// libcurl rather than Epoxy: Epoxy's HTTP/2 client rejects YouTube's responses (PROTOCOL_ERROR).
 
 const { ScramjetController } = $scramjetLoadController();
 
@@ -25,9 +26,25 @@ function initProxy() {
 
     const wispUrl = `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/wisp/`;
     const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
-    await connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+    await connection.setTransport("/libcurl/index.mjs", [{ wisp: wispUrl }]);
+    await waitForLibcurl();
   })();
   return proxyReady;
+}
+
+// libcurl loads its WebAssembly engine in the background after setTransport, and requests made
+// before that finishes fail. Probe with a tiny request until it stops saying "wasm not loaded".
+async function waitForLibcurl() {
+  const client = new BareMux.BareClient();
+  for (let i = 0; i < 40; i++) {
+    try {
+      await client.fetch(location.origin + "/favicon-probe", { method: "HEAD" });
+      return;
+    } catch (err) {
+      if (!String(err).includes("wasm not loaded")) return; // engine is up; this was some other error
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+  }
 }
 
 // Turns what the user typed into a URL: a real address, a bare domain, or a web search
