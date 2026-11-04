@@ -1,0 +1,38 @@
+[
+  {
+    "id": "snake",
+    "title": "Snake",
+    "category": "Arcade",
+    "icon": "🐍",
+    "iframe": "<iframe src=\"games/snake.html\"></iframe>"
+  },
+  {
+    "id": "tic-tac-toe",
+    "title": "Tic Tac Toe",
+    "category": "Puzzle",
+    "icon": "❌",
+    "iframe": "<iframe src=\"games/tictactoe.html\"></iframe>"
+  },
+  {
+    "id": "bitlife",
+    "title": "BitLife",
+    "category": "Simulation",
+    "icon": "🧬",
+    "thumbnail": "images/bitlife.webp",
+    "iframe": "<iframe src=\"https://2048taylorswift.github.io/bitlife/\"></iframe>"
+  },
+  {
+    "id": "drive-mad",
+    "title": "Drive Mad",
+    "category": "Driving",
+    "icon": "🚙",
+    "iframe": "<iframe src=\"games/drive-mad/index.html\"></iframe>"
+  },
+  {
+    "id": "retro-bowl",
+    "title": "Retro Bowl",
+    "category": "Sports",
+    "icon": "🏈",
+    "iframe": "<iframe src=\"https://game316009.konggames.com/gamez/0031/6009/live/index.html\"></iframe>"
+  }
+]

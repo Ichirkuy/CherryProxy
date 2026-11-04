@@ -1,0 +1,9 @@
+# Render Blueprint: lets Render set up CherryProxy automatically from this repo.
+# --ignore-scripts skips Scramjet's "use pnpm" check, which would fail an npm install.
+services:
+  - type: web
+    name: cherryproxy
+    runtime: node
+    plan: free
+    buildCommand: npm ci --ignore-scripts
+    startCommand: npm start

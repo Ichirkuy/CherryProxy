@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Snake</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; color: #eee; font-family: sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  canvas { background: #1b1b1b; border: 2px solid #333; max-width: 95vw; max-height: 80vh; }
+</style>
+</head>
+<body>
+<div id="score">Score: 0 — Arrow keys / WASD to move</div>
+<canvas id="c" width="400" height="400"></canvas>
+<script>
+  const c = document.getElementById("c"), ctx = c.getContext("2d");
+  const scoreEl = document.getElementById("score");
+  const size = 20, cells = c.width / size;
+  let snake, dir, nextDir, food, score;
+
+  function reset() {
+    snake = [{ x: 10, y: 10 }];
+    dir = nextDir = { x: 1, y: 0 };
+    score = 0;
+    placeFood();
+  }
+  function placeFood() {
+    do {
+      food = { x: Math.floor(Math.random() * cells), y: Math.floor(Math.random() * cells) };
+    } while (snake.some(s => s.x === food.x && s.y === food.y));
+  }
+
+  document.addEventListener("keydown", e => {
+    const k = e.key.toLowerCase();
+    const map = { arrowup: [0,-1], w: [0,-1], arrowdown: [0,1], s: [0,1],
+                  arrowleft: [-1,0], a: [-1,0], arrowright: [1,0], d: [1,0] };
+    if (!map[k]) return;
+    e.preventDefault();
+    const [x, y] = map[k];
+    if (x !== -dir.x || y !== -dir.y) nextDir = { x, y };
+  });
+
+  function tick() {
+    dir = nextDir;
+    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+    if (head.x < 0 || head.y < 0 || head.x >= cells || head.y >= cells ||
+        snake.some(s => s.x === head.x && s.y === head.y)) {
+      reset();
+    } else {
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) { score++; placeFood(); }
+      else snake.pop();
+    }
+    scoreEl.textContent = "Score: " + score + " — Arrow keys / WASD to move";
+    draw();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "#e74c3c";
+    ctx.fillRect(food.x * size, food.y * size, size - 2, size - 2);
+    ctx.fillStyle = "#2ecc71";
+    snake.forEach(s => ctx.fillRect(s.x * size, s.y * size, size - 2, size - 2));
+  }
+
+  reset();
+  setInterval(tick, 110);
+</script>
+</body>
+</html>

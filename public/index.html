@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CherryProxy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Falling cherry blossoms (drawn by petals.js) -->
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a href="#" class="logo" id="homeLink">🌸 CherryProxy</a>
+    <input type="search" id="search" placeholder="Search games..." autocomplete="off">
+  </header>
+
+  <!-- Home + game library -->
+  <main id="library">
+    <section class="hero">
+      <p class="greeting" id="greeting">Welcome to</p>
+      <h1 class="hero-title" aria-label="CherryProxy">
+        <span>C</span><span>h</span><span>e</span><span>r</span><span>r</span><span>y</span><span>P</span><span>r</span><span>o</span><span>x</span><span>y</span>
+      </h1>
+      <p class="hero-tagline">Play your favorite games, anywhere.</p>
+
+      <form id="webForm" class="web-form" autocomplete="off">
+        <input type="text" id="webInput" placeholder="Search the web or enter a website..." aria-label="Search the web or enter a website" spellcheck="false">
+        <button type="submit" class="btn btn-accent">Go</button>
+      </form>
+
+      <a href="#" class="hero-btn" id="browseBtn">Browse games ↓</a>
+
+      <!-- Widgets -->
+      <div class="widgets">
+        <div class="widget">
+          <h3 class="widget-label">🕒 Time</h3>
+          <div class="clock" id="clock">--:--</div>
+          <div class="clock-date" id="clockDate"></div>
+        </div>
+
+        <div class="widget">
+          <h3 class="widget-label">🎮 Last played</h3>
+          <div id="recent" class="recent"></div>
+        </div>
+
+        <div class="widget">
+          <h3 class="widget-label">🌸 Your name</h3>
+          <form id="nameForm" class="name-form">
+            <input type="text" id="nameInput" maxlength="24" placeholder="Enter your name" autocomplete="off">
+            <button type="submit" class="btn btn-accent">Save</button>
+          </form>
+          <div id="nameShow" class="name-show hidden">
+            <p>Hi, <strong id="nameText"></strong>! We'll greet you every time you visit.</p>
+            <button type="button" id="nameChange" class="btn">Change name</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="gamesTitle">Games</h2>
+    <div id="categories" class="categories"></div>
+    <div id="grid" class="grid"></div>
+    <p id="empty" class="empty hidden">No games found.</p>
+  </main>
+
+  <!-- Game player -->
+  <section id="player" class="player hidden">
+    <div class="player-bar">
+      <button id="backBtn" class="btn">← Back</button>
+      <h2 id="gameTitle"></h2>
+      <button id="fullscreenBtn" class="btn">⛶ Fullscreen</button>
+    </div>
+    <div id="frameWrap" class="frame-wrap"></div>
+  </section>
+
+  <script src="/scram/scramjet.all.js"></script>
+  <script src="/baremux/index.js"></script>
+  <script src="proxy.js"></script>
+  <script src="petals.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
